@@ -1,0 +1,101 @@
+Race,Driver,Team,Position,FastestLapTime
+Monaco GP,Fernando Alonso,Aston Martin,1,88.363
+Monaco GP,Valtteri Bottas,Alfa Romeo,2,86.323
+Monaco GP,George Russell,Mercedes,3,98.683
+Monaco GP,Daniel Ricciardo,AlphaTauri,4,97.071
+Monaco GP,Nico Hulkenberg,Haas,5,71.857
+Monaco GP,Lando Norris,McLaren,6,76.147
+Monaco GP,Kevin Magnussen,Haas,7,72.295
+Monaco GP,Esteban Ocon,Alpine,8,72.236
+Monaco GP,Logan Sargeant,Williams,9,88.763
+Monaco GP,Lewis Hamilton,Mercedes,10,81.927
+Silverstone,Pierre Gasly,Alpine,1,98.443
+Silverstone,Lando Norris,McLaren,2,75.759
+Silverstone,Alexander Albon,Williams,3,75.24
+Silverstone,Nico Hulkenberg,Haas,4,96.742
+Silverstone,Yuki Tsunoda,AlphaTauri,5,82.337
+Silverstone,Lewis Hamilton,Mercedes,6,73.877
+Silverstone,Carlos Sainz,Ferrari,7,70.229
+Silverstone,Fernando Alonso,Aston Martin,8,71.118
+Silverstone,George Russell,Mercedes,9,82.051
+Silverstone,Charles Leclerc,Ferrari,10,72.766
+Monza,Lando Norris,McLaren,1,87.522
+Monza,George Russell,Mercedes,2,93.099
+Monza,Fernando Alonso,Aston Martin,3,87.035
+Monza,Lance Stroll,Aston Martin,4,90.606
+Monza,Lewis Hamilton,Mercedes,5,98.813
+Monza,Logan Sargeant,Williams,6,97.088
+Monza,Esteban Ocon,Alpine,7,76.756
+Monza,Valtteri Bottas,Alfa Romeo,8,80.983
+Monza,Carlos Sainz,Ferrari,9,88.83
+Monza,Pierre Gasly,Alpine,10,91.087
+Spa-Francorchamps,Max Verstappen,Red Bull Racing,1,88.713
+Spa-Francorchamps,Zhou Guanyu,Alfa Romeo,2,88.345
+Spa-Francorchamps,Esteban Ocon,Alpine,3,72.205
+Spa-Francorchamps,Carlos Sainz,Ferrari,4,83.45
+Spa-Francorchamps,Lewis Hamilton,Mercedes,5,72.226
+Spa-Francorchamps,Yuki Tsunoda,AlphaTauri,6,87.918
+Spa-Francorchamps,Alexander Albon,Williams,7,72.68
+Spa-Francorchamps,George Russell,Mercedes,8,97.727
+Spa-Francorchamps,Logan Sargeant,Williams,9,98.658
+Spa-Francorchamps,Lando Norris,McLaren,10,83.118
+Suzuka,Fernando Alonso,Aston Martin,1,87.582
+Suzuka,Lewis Hamilton,Mercedes,2,91.706
+Suzuka,Logan Sargeant,Williams,3,81.129
+Suzuka,Kevin Magnussen,Haas,4,70.199
+Suzuka,Pierre Gasly,Alpine,5,87.668
+Suzuka,Nico Hulkenberg,Haas,6,96.777
+Suzuka,Max Verstappen,Red Bull Racing,7,80.514
+Suzuka,Oscar Piastri,McLaren,8,82.506
+Suzuka,Esteban Ocon,Alpine,9,83.459
+Suzuka,Valtteri Bottas,Alfa Romeo,10,79.165
+Bahrain,Oscar Piastri,McLaren,1,93.212
+Bahrain,Charles Leclerc,Ferrari,2,82.604
+Bahrain,Carlos Sainz,Ferrari,3,85.293
+Bahrain,Yuki Tsunoda,AlphaTauri,4,79.343
+Bahrain,Fernando Alonso,Aston Martin,5,76.573
+Bahrain,Daniel Ricciardo,AlphaTauri,6,78.305
+Bahrain,Nico Hulkenberg,Haas,7,81.256
+Bahrain,Pierre Gasly,Alpine,8,72.285
+Bahrain,Zhou Guanyu,Alfa Romeo,9,90.247
+Bahrain,George Russell,Mercedes,10,92.681
+Singapore,Lewis Hamilton,Mercedes,1,72.025
+Singapore,Lance Stroll,Aston Martin,2,70.186
+Singapore,Oscar Piastri,McLaren,3,85.493
+Singapore,Alexander Albon,Williams,4,82.589
+Singapore,Carlos Sainz,Ferrari,5,85.528
+Singapore,Kevin Magnussen,Haas,6,99.911
+Singapore,Zhou Guanyu,Alfa Romeo,7,90.883
+Singapore,Nico Hulkenberg,Haas,8,77.446
+Singapore,Sergio Perez,Red Bull Racing,9,75.339
+Singapore,Max Verstappen,Red Bull Racing,10,87.849
+Hungary,Zhou Guanyu,Alfa Romeo,1,88.088
+Hungary,Charles Leclerc,Ferrari,2,79.832
+Hungary,Nico Hulkenberg,Haas,3,85.267
+Hungary,Yuki Tsunoda,AlphaTauri,4,95.7
+Hungary,Esteban Ocon,Alpine,5,75.07
+Hungary,Daniel Ricciardo,AlphaTauri,6,70.854
+Hungary,Max Verstappen,Red Bull Racing,7,76.439
+Hungary,Oscar Piastri,McLaren,8,89.482
+Hungary,Fernando Alonso,Aston Martin,9,80.46
+Hungary,Kevin Magnussen,Haas,10,80.474
+Austria,Charles Leclerc,Ferrari,1,73.949
+Austria,Lando Norris,McLaren,2,82.275
+Austria,George Russell,Mercedes,3,93.959
+Austria,Fernando Alonso,Aston Martin,4,88.66
+Austria,Alexander Albon,Williams,5,71.88
+Austria,Oscar Piastri,McLaren,6,90.528
+Austria,Sergio Perez,Red Bull Racing,7,92.719
+Austria,Nico Hulkenberg,Haas,8,81.502
+Austria,Lewis Hamilton,Mercedes,9,84.371
+Austria,Daniel Ricciardo,AlphaTauri,10,80.723
+Brazil,Logan Sargeant,Williams,1,78.59
+Brazil,Pierre Gasly,Alpine,2,71.38
+Brazil,Lance Stroll,Aston Martin,3,83.557
+Brazil,Daniel Ricciardo,AlphaTauri,4,86.693
+Brazil,Carlos Sainz,Ferrari,5,79.671
+Brazil,Oscar Piastri,McLaren,6,98.199
+Brazil,Nico Hulkenberg,Haas,7,82.976
+Brazil,Lewis Hamilton,Mercedes,8,70.026
+Brazil,Sergio Perez,Red Bull Racing,9,86.07
+Brazil,Lando Norris,McLaren,10,93.162
