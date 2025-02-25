@@ -44,6 +44,18 @@ void loadData(vector<F1Results> &results, const string &filename) {
     ifile.close();
 }
 
+void displayResults(vector<F1Results> &results) {
+    cout << "|Race       |Driver      |Team     |Position    |Fastest Lap    |\n";
+    cout << "---------------------------------------------------------------------";
+    for (const auto &result: results) {
+        cout << result.race << " | ";
+        cout << result.driver << " | ";
+        cout << result.team << " | ";
+        cout << result.position << " | ";
+        cout << result.fastestLap << " | \n";
+    }
+}
+
 void showMenu() {
     cout << "\n1. Display all results\n";
     cout << "2. Search for a driver\n";
@@ -56,4 +68,24 @@ int main() {
     vector<F1Results> results;
     string filename = "F1_Data.csv";
     loadData(results, filename);
+
+    int choice;
+    while (true) {
+        showMenu();
+        cin >> choice;
+        cin.ignore();
+
+        if (choice == 1) {
+            displayResults(results);
+        }else if (choice == 2) {
+
+        }else if (choice == 3) {
+
+        }else if (choice == 4) {
+
+        }else if (choice == 5) {
+            break;
+        }
+    }
+    return 0;
 }
