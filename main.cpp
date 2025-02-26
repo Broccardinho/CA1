@@ -56,6 +56,28 @@ void displayResults(vector<F1Results> &results) {
     }
 }
 
+int searchDriver(const vector<F1Results> &results, const string &driverName) {
+    bool found = false;
+
+    cout << "Results for " << driverName << ":\n";
+    cout << "--------------------------------------------\n";
+    cout << "|  Race  |  Team  | Position | Fastest Lap |\n";
+    cout << "--------------------------------------------\n";
+
+    for (const auto &result : results) {
+        if (result.driver == driverName) {
+            cout << "| " << result.race << " | "
+            << result.team << " | "
+            << result.position << " | "
+            << result.fastestLap << "\n";
+            found = true;
+        }
+    }
+    if (!found) {
+        cout << "No races found for " << driverName << ".\n";
+    }
+}
+
 void showMenu() {
     cout << "\n1. Display all results\n";
     cout << "2. Search for a driver\n";
@@ -78,7 +100,20 @@ int main() {
         if (choice == 1) {
             displayResults(results);
         }else if (choice == 2) {
+            string driver;
+            cout << "Enter driver name: ";
+            getline(cin, driver);
 
+            int index = searchDriver(results, driver);
+            if (index != -1) {
+                cout << results[index].driver << ":\n"
+                << results[index].race << " | "
+                << results[index].team << " | "
+                << results[index].position << " | "
+                << results[index].fastestLap << "|\n";
+            } else {
+                cout << "Driver not found.\n";
+            }
         }else if (choice == 3) {
 
         }else if (choice == 4) {
