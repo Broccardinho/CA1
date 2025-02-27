@@ -80,33 +80,39 @@ int searchDriver(const vector<F1Results> &results, const string &driverName) {
     }
     return -1;
 }
-void countTeamWins(const vector<F1Results> &results) {
+map<string,int> countTeamWins(const vector<F1Results> &results) {
     map<string, int> teamWins;
     for (const auto &result : results) {
         if (result.position == 1) {
             teamWins[result.team]++;
         }
     }
-    cout << "Team wins: \n";
-    for (const auto &teamWin : teamWins) {
-        cout << teamWin.first << " " << teamWin.second << "\n";
-    }
+    return teamWins;
 }
-void filterByTeam(const vector<F1Results> &results, const string &team) {
-    bool found = false;
-    for (const auto &result: results) {
+
+void filterByTeam(vector<F1Results> &results, const string &team) {
+bool found = false;
+
+    cout << "-----------------------------------------------------------------\n"
+         << "| Race              | Driver          | Position | Fastest Lap |\n"
+         << "-----------------------------------------------------------------\n";
+
+    for (const auto &result : results) {
         if (result.team == team) {
-            cout << result.race << " | ";
-            cout << result.driver << " | ";
-            cout << result.position << " | ";
-            cout << result.fastestLap << " | \n";
+            cout << "| " << left << setw(18) << result.race
+            << "| " << setw(17) << result.driver
+            << "| " << setw(9) << result.position
+            << "| " << setw(11) << result.fastestLap
+            << " |\n";
             found = true;
         }
     }
     if (!found) {
-        cout << "No races found for team " << team << ".\n";
+        cout << "No results found for team " << team << endl;
     }
+    cout << "-----------------------------------------------------------------\n";
 }
+
 void showMenu() {
     cout << "\n1. Display all results\n";
     cout << "2. Search for a driver\n";
@@ -131,26 +137,47 @@ int main() {
         switch (choice) {
             case 1:
                 displayResults(results);
-                break;
-            case 2:
+            break;
+            case 2: {
                 string driver;
                 cout << "Enter driver name: ";
                 getline(cin, driver);
                 int index = searchDriver(results, driver);
                 if (index != -1) {
                     const F1Results& result = results[index];
-                    cout <<"---------------------------------\n"
-                    << "| Race " <<setw(10)<< "| Position | Fastest Lap |\n"
-                    <<"---------------------------------\n"
+                    cout <<"------------------------------------------\n"
+                    << "| Race            | Position | Fastest Lap |\n"
+                    <<"-------------------------?-----------------\n"
                     << "| "<< left << setw(16) << result.race
-                    << "| "<< setw(5) << result.position
-                    << "| "<< setw(5) << result.fastestLap
+                    << "| "<< setw(9) << result.position
+                    << "| "<< setw(11) << result.fastestLap
                     << " |\n"
-                    <<"---------------------------------\n";
+                    <<"------------------------------------------\n";
                 } else {
                     cout << "Driver not found.\n";
                 }
-            break;
+                break;
+            }
+            case 3:{
+                map<string, int> teamWins = countTeamWins(results);
+                cout << "Team Wins:\n";
+                cout << "----------------------------\n"
+                     << "| Team           | Wins    |\n"
+                     << "----------------------------\n";
+                for (const auto &team : teamWins) {
+                    cout << "| " << setw(15) << team.first
+                    << "| " << setw(7) << team.second << " |\n";
+                }
+                cout << "----------------------------\n";
+                break;
+            }
+            case 4: {
+                string team;
+                cout << "Enter team name: ";
+                getline(cin, team);
+                filterByTeam(results, team);
+                break;
+            }
         }
     }
 }
