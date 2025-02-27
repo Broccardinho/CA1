@@ -77,7 +77,18 @@ int searchDriver(const vector<F1Results> &results, const string &driverName) {
         cout << "No races found for " << driverName << ".\n";
     }
 }
-
+void countTeamWins(const vector<F1Results> &results) {
+    map<string, int> teamWins;
+    for (const auto &result : results) {
+        if (result.position == 1) {
+            teamWins[result.team]++;
+        }
+    }
+    cout << "Team wins: \n";
+    for (const auto &teamWin : teamWins) {
+        cout << teamWin.first << " " << teamWin.second << "\n";
+    }
+}
 void showMenu() {
     cout << "\n1. Display all results\n";
     cout << "2. Search for a driver\n";
@@ -115,7 +126,7 @@ int main() {
                 cout << "Driver not found.\n";
             }
         }else if (choice == 3) {
-
+            countTeamWins(results);
         }else if (choice == 4) {
 
         }else if (choice == 5) {
