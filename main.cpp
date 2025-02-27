@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iomanip>
 
 using namespace std;
 
@@ -28,34 +29,49 @@ void loadData(vector<F1Results> &results, const string &filename) {
         istringstream ss(line);
         F1Results result;
         string temp;
+        try{
 
-        getline(ss, result.race, ',');
-        getline(ss, result.driver, ',');
-        getline(ss, result.team, ',');
+            getline(ss, result.race, ',');
+            getline(ss, result.driver, ',');
+            getline(ss, result.team, ',');
 
-        getline(ss, temp, ',');
-        result.position = stoi(temp);
+            getline(ss, temp, ',');
+            result.position = stoi(temp);
 
-        getline(ss, temp, ',');
-        result.fastestLap = stod(temp);
+            getline(ss, temp, ',');
+            result.fastestLap = stod(temp);
 
-        results.push_back(result);
+            results.push_back(result);
+        }
+        catch (const invalid_argument& e) {
+            cout << "Error parsing line: " << line << endl;
+        }
+        catch (const out_of_range& e) {
+            cout << "Error parsing line: " << line << endl;
+        }
     }
     ifile.close();
 }
 
 void displayResults(vector<F1Results> &results) {
-    cout << "|Race       |Driver      |Team     |Position    |Fastest Lap    |\n";
-    cout << "---------------------------------------------------------------------";
-    for (const auto &result: results) {
-        cout << result.race << " | ";
-        cout << result.driver << " | ";
-        cout << result.team << " | ";
-        cout << result.position << " | ";
-        cout << result.fastestLap << " | \n";
+    cout << left << setw(25) << "Race"
+    << setw(20) << "Driver"
+    << setw(10) << "Team"
+    << setw(10) << "Position"
+    << setw(15) << "Fastest Lap"
+    << endl;
+
+    cout << string(25 + 20 + 10 + 10 + 15, '-') << endl;
+
+    for (const auto &result : results) {
+        cout << left << setw(25) << result.race
+        << setw(20) << result.driver
+        << setw(10) << result.team
+        << setw(10) << result.position
+        << setw(15) << result.fastestLap
+        << endl;
     }
 }
-
 int searchDriver(const vector<F1Results> &results, const string &driverName) {
     bool found = false;
 
@@ -76,6 +92,7 @@ int searchDriver(const vector<F1Results> &results, const string &driverName) {
     if (!found) {
         cout << "No races found for " << driverName << ".\n";
     }
+    return -1;
 }
 void countTeamWins(const vector<F1Results> &results) {
     map<string, int> teamWins;
@@ -87,6 +104,21 @@ void countTeamWins(const vector<F1Results> &results) {
     cout << "Team wins: \n";
     for (const auto &teamWin : teamWins) {
         cout << teamWin.first << " " << teamWin.second << "\n";
+    }
+}
+void filterByTeam(const vector<F1Results> &results, const string &team) {
+    bool found = false;
+    for (const auto &result: results) {
+        if (result.team == team) {
+            cout << result.race << " | ";
+            cout << result.driver << " | ";
+            cout << result.position << " | ";
+            cout << result.fastestLap << " | \n";
+            found = true;
+        }
+    }
+    if (!found) {
+        cout << "No races found for team " << team << ".\n";
     }
 }
 void showMenu() {
@@ -103,35 +135,19 @@ int main() {
     loadData(results, filename);
 
     int choice;
-    while (true) {
+    bool running = true;
+
+    while (running) {
         showMenu();
         cin >> choice;
-        cin.ignore();
+        cin.ignore(1000, '\n');
 
-        if (choice == 1) {
-            displayResults(results);
-        }else if (choice == 2) {
-            string driver;
-            cout << "Enter driver name: ";
-            getline(cin, driver);
-
-            int index = searchDriver(results, driver);
-            if (index != -1) {
-                cout << results[index].driver << ":\n"
-                << results[index].race << " | "
-                << results[index].team << " | "
-                << results[index].position << " | "
-                << results[index].fastestLap << "|\n";
-            } else {
-                cout << "Driver not found.\n";
-            }
-        }else if (choice == 3) {
-            countTeamWins(results);
-        }else if (choice == 4) {
-
-        }else if (choice == 5) {
+        switch (choice) {
+            case 1:
+                displayResults(results);
+                break;
+            case 2:
             break;
         }
     }
-    return 0;
 }
