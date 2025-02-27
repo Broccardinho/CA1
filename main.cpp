@@ -73,24 +73,10 @@ void displayResults(vector<F1Results> &results) {
     }
 }
 int searchDriver(const vector<F1Results> &results, const string &driverName) {
-    bool found = false;
-
-    cout << "Results for " << driverName << ":\n";
-    cout << "--------------------------------------------\n";
-    cout << "|  Race  |  Team  | Position | Fastest Lap |\n";
-    cout << "--------------------------------------------\n";
-
-    for (const auto &result : results) {
-        if (result.driver == driverName) {
-            cout << "| " << result.race << " | "
-            << result.team << " | "
-            << result.position << " | "
-            << result.fastestLap << "\n";
-            found = true;
+    for (size_t i = 0; i < results.size(); i++) {
+        if (results[i].driver == driverName) {
+            return i;
         }
-    }
-    if (!found) {
-        cout << "No races found for " << driverName << ".\n";
     }
     return -1;
 }
@@ -147,6 +133,23 @@ int main() {
                 displayResults(results);
                 break;
             case 2:
+                string driver;
+                cout << "Enter driver name: ";
+                getline(cin, driver);
+                int index = searchDriver(results, driver);
+                if (index != -1) {
+                    const F1Results& result = results[index];
+                    cout <<"---------------------------------\n"
+                    << "| Race " <<setw(10)<< "| Position | Fastest Lap |\n"
+                    <<"---------------------------------\n"
+                    << "| "<< left << setw(16) << result.race
+                    << "| "<< setw(5) << result.position
+                    << "| "<< setw(5) << result.fastestLap
+                    << " |\n"
+                    <<"---------------------------------\n";
+                } else {
+                    cout << "Driver not found.\n";
+                }
             break;
         }
     }
