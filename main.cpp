@@ -121,31 +121,39 @@ void filterByTeam(vector<F1Results> &results, const string &team) {
     cout << "-----------------------------------------------------------------\n";
 }
 
-// LapStats calculateLapStats(const vector<F1Results> &results, const string &race) {
-//     LapStats stats;
-//     stats.minLap.fastestLap = results[0].fastestLap;
-//     stats.maxLap.fastestLap = results[0].fastestLap;
-//     double totalLapTime = 0;
-//     int count = 0;
-//
-//     for (const auto &result: results) {
-//         if (result.race == race) {
-//             if (result.fastestLap < stats.minLap.fastestLap) {
-//                 stats.minLap = result;
-//             }
-//             if (result.fastestLap > stats.maxLap.fastestLap) {
-//                 stats.maxLap = result;
-//             }
-//             totalLapTime += result.fastestLap;
-//             count++;
-//         }
-//         if (count == 0) {
-//             throw invalid_argument("Race not found");
-//         }
-//         stats.averageLap = totalLapTime / count;
-//         return stats;
-//     }
-// }
+LapStats calculateLapStats(const vector<F1Results> &results, const string &race) {
+    LapStats stats;
+    bool raceFound = false;
+    double totalLapTime = 0;
+    int count = 0;
+
+    for (const auto &result: results) {
+        if (result.race == race) {
+            stats.minLap = result;
+            stats.maxLap = result;
+            raceFound = true;
+            break;
+        }
+    }
+    if (!raceFound) {
+        cout << "No results found for race: " << race << endl;
+    }
+
+    for (const auto &result: results) {
+        if (result.race == race) {
+            if (result.fastestLap < result.position) {
+                stats.minLap = result;
+            }
+            if (result.fastestLap > result.position) {
+                stats.maxLap = result;
+            }
+            totalLapTime += result.fastestLap;
+            count++;
+        }
+    }
+    stats.averageLap = totalLapTime / count;
+    return stats;
+}
 
 string toLowercase(const string &str) {
     string lower = str;
@@ -187,9 +195,9 @@ void showMenu() {
     cout << "2. Search for a driver\n";
     cout << "3. Count teams by wins\n";
     cout << "4. Filter by team\n";
-    cout << "5. \n";
-    cout << "6. \n";
-    cout << "7. \n";
+    cout << "5. Calculate fastest Lap time for a track\n";
+    cout << "6. Search for Partial Matches\n";
+    cout << "7. Sort by track and fastest time (desc)\n";
     cout << "8. Exit\n";
 }
 
@@ -214,18 +222,18 @@ int main() {
             case 1:
                 cout << "All results\n";
                 cout << "-------------------------------------------------------------------------------------\n"
-                     << "| Race              | Driver           | Team              | Position | Fastest Lap |\n"
-                     << "-------------------------------------------------------------------------------------\n";
+                        << "| Race              | Driver           | Team              | Position | Fastest Lap |\n"
+                        << "-------------------------------------------------------------------------------------\n";
                 for (const auto &result: results) {
                     cout << "| " << left << setw(18) << result.race
-                    << "| " << setw(17) << result.driver
-                    << "| " << setw(18) << result.team
-                    << "| " << setw(9) << result.position
-                    << "| " << fixed << setprecision(2) <<setw(11) << result.fastestLap
-                    << " |\n";
+                            << "| " << setw(17) << result.driver
+                            << "| " << setw(18) << result.team
+                            << "| " << setw(9) << result.position
+                            << "| " << fixed << setprecision(2) << setw(11) << result.fastestLap
+                            << " |\n";
                 }
                 cout << "-------------------------------------------------------------------------------------\n";
-            break;
+                break;
             case 2: {
                 string driver;
                 cout << "Enter driver name: ";
@@ -266,37 +274,36 @@ int main() {
                 filterByTeam(results, team);
                 break;
             }
-            // case 5: {
-            //     string race;
-            //     cout << "Enter race name: ";
-            //     getline(cin, race);
-            //
-            //     try {
-            //         LapStats stats = calculateLapStats(results, race);
-            //
-            //         // Display results
-            //         cout << "Fastest Lap Statistics for " << race << ":\n";
-            //         cout << "------------------------------------------------------------\n"
-            //                 << "| Statistic | Driver          | Position | Fastest Lap (s) |\n"
-            //                 << "------------------------------------------------------------\n"
-            //                 << "| Min       | " << left << setw(16) << stats.minLap.driver
-            //                 << "| " << setw(9) << stats.minLap.position
-            //                 << "| " << fixed << setprecision(2) << setw(14) << stats.minLap.fastestLap
-            //                 << " |\n"
-            //                 << "| Max       | " << setw(16) << stats.maxLap.driver
-            //                 << "| " << setw(9) << stats.maxLap.position
-            //                 << "| " << setw(14) << stats.maxLap.fastestLap
-            //                 << " |\n"
-            //                 << "| Average   | " << setw(16) << "N/A"
-            //                 << "| " << setw(9) << "N/A"
-            //                 << "| " << setw(14) << static_cast<int>(stats.averageLap)
-            //                 << " |\n"
-            //                 << "------------------------------------------------------------\n";
-            //     } catch (const invalid_argument &e) {
-            //         cout << "Error: " << e.what() << endl;
-            //     }
-            //     break;
-            // }
+            case 5: {
+                string race;
+                cout << "Enter race name: ";
+                getline(cin, race);
+
+                try {
+                    LapStats stats = calculateLapStats(results, race);
+
+                    cout << "Fastest Lap Statistics for " << race << ":\n";
+                    cout << "------------------------------------------------------------\n"
+                            << "| Statistic | Driver          | Position | Fastest Lap (s) |\n"
+                            << "------------------------------------------------------------\n"
+                            << "| Min       | " << left << setw(16) << stats.minLap.driver
+                            << "| " << setw(9) << stats.minLap.position
+                            << "| " << fixed << setprecision(2) << setw(14) << stats.minLap.fastestLap
+                            << " |\n"
+                            << "| Max       | " << setw(16) << stats.maxLap.driver
+                            << "| " << setw(9) << stats.maxLap.position
+                            << "| " << setw(14) << stats.maxLap.fastestLap
+                            << " |\n"
+                            << "| Average   | " << setw(16) << "N/A"
+                            << "| " << setw(9) << "N/A"
+                            << "| " << setw(15) << stats.averageLap
+                            << " |\n"
+                            << "------------------------------------------------------------\n";
+                } catch (const invalid_argument &e) {
+                    cout << "Error: " << e.what() << endl;
+                }
+                break;
+            }
             case 6: {
                 string searchTerm;
                 cout << "Enter partial match: ";
@@ -355,9 +362,13 @@ int main() {
                 }
                 break;
             }
+            case 8:
+                running = false;
+                cout << "Exiting the system\n";
+                break;
             default:
                 cout << "Invalid choice.\n";
-            break;
+                break;
         }
     }
     return 0;
