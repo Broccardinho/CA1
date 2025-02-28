@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -5,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <iomanip>
+#include <bits/ranges_algo.h>
 
 using namespace std;
 
@@ -155,7 +157,8 @@ string toLowercase(const string &str) {
     return lower;
 }
 
-vector<F1Results> searchPartialMatch(const vector<F1Results> &results, const string &partialMatch, const string &searchTerm) {
+vector<F1Results> searchPartialMatch(const vector<F1Results> &results, const string &partialMatch,
+                                     const string &searchTerm) {
     vector<F1Results> partialResults;
     string termLower = toLowercase(searchTerm);
 
@@ -169,8 +172,14 @@ vector<F1Results> searchPartialMatch(const vector<F1Results> &results, const str
             teamLower.find(termLower) != string::npos) {
             partialResults.push_back(*it);
         }
-        }
+    }
     return partialResults;
+}
+
+void sortByFastestLap(vector<F1Results> &results) {
+    sort(results.begin(), results.end(), [](const F1Results &r1, const F1Results &r2) {
+        return r1.fastestLap > r2.fastestLap;
+    });
 }
 
 void showMenu() {
@@ -178,7 +187,10 @@ void showMenu() {
     cout << "2. Search for a driver\n";
     cout << "3. Count teams by wins\n";
     cout << "4. Filter by team\n";
-    cout << "5. Exit\n";
+    cout << "5. \n";
+    cout << "6. \n";
+    cout << "7. \n";
+    cout << "8. Exit\n";
 }
 
 int main() {
@@ -191,13 +203,29 @@ int main() {
 
     while (running) {
         showMenu();
-        cin >> choice;
+
+        while (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore();
+        }
         cin.ignore(1000, '\n');
 
         switch (choice) {
             case 1:
-                displayResults(results);
-                break;
+                cout << "All results\n";
+                cout << "-------------------------------------------------------------------------------------\n"
+                     << "| Race              | Driver           | Team              | Position | Fastest Lap |\n"
+                     << "-------------------------------------------------------------------------------------\n";
+                for (const auto &result: results) {
+                    cout << "| " << left << setw(18) << result.race
+                    << "| " << setw(17) << result.driver
+                    << "| " << setw(18) << result.team
+                    << "| " << setw(9) << result.position
+                    << "| " << fixed << setprecision(2) <<setw(11) << result.fastestLap
+                    << " |\n";
+                }
+                cout << "-------------------------------------------------------------------------------------\n";
+            break;
             case 2: {
                 string driver;
                 cout << "Enter driver name: ";
@@ -205,14 +233,14 @@ int main() {
                 int index = searchDriver(results, driver);
                 if (index != -1) {
                     const F1Results &result = results[index];
-                    cout << "------------------------------------------\n"
+                    cout << "--------------------------------------------\n"
                             << "| Race            | Position | Fastest Lap |\n"
-                            << "-------------------------?-----------------\n"
+                            << "---------------------------------------------\n"
                             << "| " << left << setw(16) << result.race
                             << "| " << setw(9) << result.position
-                            << "| " << setw(11) << result.fastestLap
+                            << "| " << fixed << setprecision(2) << setw(11) << result.fastestLap
                             << " |\n"
-                            << "------------------------------------------\n";
+                            << "--------------------------------------------\n";
                 } else {
                     cout << "Driver not found.\n";
                 }
@@ -276,7 +304,7 @@ int main() {
 
                 vector<F1Results> partialResults = searchPartialMatch(results, searchTerm, searchTerm);
                 if (partialResults.empty()) {
-                    cout << "No results found for: "<< searchTerm <<"\n";
+                    cout << "No results found for: " << searchTerm << "\n";
                 } else {
                     cout << "Partial results for: " << searchTerm << "\n";
                     cout << "-----------------------------------------------------------------------------\n"
@@ -287,13 +315,50 @@ int main() {
                                 << "| " << setw(17) << result.driver
                                 << "| " << setw(10) << result.team
                                 << "| " << setw(9) << result.position
-                                << "| " << setw(11) << result.fastestLap
+                                << "| " << fixed << setprecision(2) << setw(11) << result.fastestLap
                                 << " |\n";
                     }
                     cout << "-----------------------------------------------------------------------------\n";
                 }
                 break;
             }
+            case 7: {
+                string searchTerm;
+                cout << "Enter Track to sort by: ";
+                getline(cin, searchTerm);
+
+                vector<F1Results> filteredResults;
+                for (const auto &result: results) {
+                    if (searchTerm == result.race) {
+                        filteredResults.push_back(result);
+                    }
+                }
+                if (filteredResults.empty()) {
+                    cout << "No results found for: " << searchTerm << "\n";
+                } else {
+                    sortByFastestLap(filteredResults);
+
+
+                    cout << "Results for " << searchTerm << " sorted by fastest lap time (descending):\n";
+                    cout << "-------------------------------------------------------------------------------------\n"
+                            << "| Race              | Driver          | Team               | Position | Fastest Lap |\n"
+                            << "-------------------------------------------------------------------------------------\n";
+                    for (const auto &result: filteredResults) {
+                        cout << "| " << left << setw(18) << result.race
+                                << "| " << setw(17) << result.driver
+                                << "| " << setw(18) << result.team
+                                << "| " << setw(9) << result.position
+                                << "| " << fixed << setprecision(2) << setw(11) << result.fastestLap
+                                << " |\n";
+                    }
+                    cout << "-------------------------------------------------------------------------------------\n";
+                }
+                break;
+            }
+            default:
+                cout << "Invalid choice.\n";
+            break;
         }
     }
+    return 0;
 }
